@@ -21,6 +21,9 @@
   "homepage": "https://github.com/wolfie-VIP/CSE316-Spring21-HW3#readme",
   "dependencies": {
     "@apollo/client": "^3.3.7",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "apollo-server": "^2.14.5",
     "apollo-server-express": "^2.14.5",
     "bcryptjs": "^2.4.3",
@@ -39,6 +42,7 @@
     "nodemon": "^2.0.4",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "react-icons": "^4.2.0",
     "react-native": "^0.64.0",
     "react-router-dom": "^5.2.0",
     "validator": "^13.1.1",
