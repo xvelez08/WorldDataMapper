@@ -1,0 +1,86 @@
+#root {
+    height: 100vh;
+}
+
+html {
+    height: 100%;
+}
+
+/* ----------------------------- Top-Level Setup ---------------------------- */
+#root {
+    height: 100vh;
+}
+
+html {
+    height: 100%;
+}
+
+/* ----------------------------- Top-Level Setup ---------------------------- */
+.container-primary {
+    width: 100%;
+    height: 100%;
+    padding: 0 24px;
+}
+
+.container-secondary {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+
+.modal-input {
+    width: 100%;
+}
+
+.login-modal {
+    width: 350px;
+}
+
+.signup-modal {
+    width: 375px;
+}
+
+.modal-col-gap{
+    column-gap: 24px;
+}
+
+.modal-button {
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.modal-spacer {
+    height: 24px;
+}
+
+.main-login-modal {
+    padding: 24px 24px 0px 24px;
+}
+
+.modal-error {
+    height: 24px;
+    align-items: center;
+    display: flex;
+}
+
+.delete-modal {
+    width: fit-content;
+}
+.fa-globe-americas{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+}
+
+.icon-container{
+    text-align: center;
+    font-size: 3em;
+    height:100%;
+}
+#welcome-msg {
+    font-size:.75em;
+
+}
