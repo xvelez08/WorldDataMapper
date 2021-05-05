@@ -25,6 +25,16 @@ export const LOGOUT = gql`
 		logout 
 	}
 `;
+export const EDIT_ACCOUNT = gql`
+	mutation EditAccount($email: String, $password: String, $fullName: String, $_id:String!) {
+		editAccount(email: $email, password: $password, fullName:$fullName, _id:$_id) {
+			email 
+			_id
+			fullName
+			password
+		}
+	}
+`;
 
 // export const ADD_ITEM = gql`
 // 	mutation AddItem($item: ItemInput!, $_id: String!, $index: Int!) {
