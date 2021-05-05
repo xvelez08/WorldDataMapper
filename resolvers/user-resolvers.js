@@ -78,6 +78,16 @@ module.exports = {
 			res.clearCookie('refresh-token');
 			res.clearCookie('access-token');
 			return true;
+		},
+		editAccount:(_, args, { res }) => {
+			const { email, password, fullName, _id} = args;
+			const newUser = User.findByIdAndUpdate(_id, {fullName:fullName, email:email, password:password});
+			if(newUser){ 
+				console.log("Updated");
+				return newUser; 
+			}else{
+				console.log("failed update");
+			}
 		}
 	}
 }

@@ -54,10 +54,11 @@ html, body {
 
 .logo {
 	color: $primary-color;
-    font-size: 1.25rem;
+    font-size: 1.00rem;
     font-family: 'Shrikhand', monospace;
     text-transform: uppercase;
     font-weight: bold;
+    border: 2px solid;
 } 
 
 .navbar-options {
@@ -67,13 +68,18 @@ html, body {
 
 #createAccount, #editAccount{
     color: #45C686; 
-    border: 1px solid;
+    border: 2px solid;
     border-color:  #45C686;
 }
 #loginButton, #logoutButton{
     color: white; 
-    border: 1px solid;
+    border: 2px solid;
     border-color:  white;
+}
+#logoButton{
+    color: $primary-color; 
+    border: 2px solid;
+    border-color:  $primary-color;
 }
 .welcome-content-card{
     width: 100%;

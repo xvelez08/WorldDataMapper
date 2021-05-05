@@ -15,6 +15,7 @@ const typeDefs = gql `
 		login(email: String!, password: String!): User
 		register(email: String!, password: String!, fullName: String!): User
 		logout: Boolean!
+		editAccount(email:String, password: String, fullName: String, _id:String!):User
 	}
 `;
 

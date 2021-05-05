@@ -13,11 +13,11 @@ const typeDefs = gql `
         getMapById(_id:String!):Map
     }
     extend type Mutation{
-        addMap(map:MapInput!,_id:String!)
+        addMap(map:MapInput!):String
         deleteMap(mapId:String!, _id:String!):[Map]
         deleteRegion(mapId:String!, _id:String!):[Region]
         addRegion(region:Region!):[Region]
-        editMap(mapId:String!, _id:String!, name:String, regionList:[Region], owner:User!):Map
+        updateMapName(_id:String!, field:String!, value:String!):[Map]
     }
     input MapInput {
         _id: String

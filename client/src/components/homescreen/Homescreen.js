@@ -2,6 +2,7 @@ import Logo 							from '../navbar/Logo';
 import Login 							from '../modals/Login';
 import CreateAccount 					from '../modals/CreateAccount';
 import NavbarOptions 					from '../navbar/NavbarOptions';
+import EditAccount                      from '../modals/EditAccount';
 import MainContents 					from '../main/MainContents';
 import * as mutations 					from '../../cache/mutations';
 import * as queries                     from '../../cache/queries';
@@ -30,7 +31,7 @@ const Homescreen = (props) => {
     let maps = []; 
     const userName = auth ? props.user.fullName : "";
 
-    const [showDelete, toggleShowDelete] 	= useState(false);
+    const [showEdit, toggleShowEdit] 	    = useState(false);
 	const [showLogin, toggleShowLogin] 		= useState(false);
 	const [showCreate, toggleShowCreate] 	= useState(false);
     const [userFullName, setUserName]       = useState(userName);
@@ -46,21 +47,21 @@ const Homescreen = (props) => {
      //-------------------Modals Setup-------------------
 
      const setShowLogin = () => {
-		toggleShowDelete(false);
+		toggleShowEdit(false);
 		toggleShowCreate(false);
 		toggleShowLogin(!showLogin);
 	};
 
 	const setShowCreate = () => {
-		toggleShowDelete(false);
+		toggleShowEdit(false);
 		toggleShowLogin(false);
 		toggleShowCreate(!showCreate);
 	};
 
-	const setShowDelete = () => {
+	const setShowEdit = () => {
 		toggleShowCreate(false);
 		toggleShowLogin(false);
-		toggleShowDelete(!showDelete)
+		toggleShowEdit(!showEdit)
 	};
 
 
@@ -70,13 +71,14 @@ const Homescreen = (props) => {
                 <WNavbar color="colored">
                     <ul>
                         <WNavItem>
-                            <Logo className='logo' />
+                            <Logo  className='logo' />
                         </WNavItem>
                     </ul>
                     <ul>
                         <NavbarOptions 
                             fetchUser={props.fetchUser}     auth={auth} 
 							setShowCreate={setShowCreate} 	setShowLogin={setShowLogin}
+                            setShowEdit={setShowEdit}   
 							// reloadTodos={refetch} 			//setActiveList={loadTodoList}
                             setUserName={setUserName}       userName={userFullName}   
                         />
@@ -90,11 +92,11 @@ const Homescreen = (props) => {
                 }
             </WLMain>
             {
-				// showDelete && (<Delete deleteList={deleteList} activeid={activeList._id} setShowDelete={setShowDelete} />)
+				showEdit && (<EditAccount user = {props.user} fetchUser={props.fetchUser} setShowEdit={setShowEdit} />)
 			}
 
 			{
-				showCreate && (<CreateAccount setUserName={setUserName}   fetchUser={props.fetchUser} setShowCreate={setShowCreate} />)
+				showCreate && (<CreateAccount setUserName={setUserName}   fetchUser={props.fetchUser} fetchUser={props.fetchUser} setShowCreate={setShowCreate} />)
 			}
 
 			{
