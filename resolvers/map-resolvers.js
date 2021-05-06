@@ -15,9 +15,9 @@ module.exports = {
 		getAllMaps: async (_, __, { req }) => {
 			const _id = new ObjectId(req.userId);
 			if(!_id) { return([])};
-			const todolists = await Todolist.find({owner: _id});
-			if(todolists) {
-				return (todolists);
+			const maplists = await MapList.find({owner: _id});
+			if(maplists) {
+				return (maplists);
 			} 
 
 		},
@@ -28,8 +28,8 @@ module.exports = {
 		getMapById: async (_, args) => {
 			const { _id } = args;
 			const objectId = new ObjectId(_id);
-			const todolist = await Todolist.findOne({_id: objectId});
-			if(todolist) return todolist;
+			const maplist = await MapList.findOne({_id: objectId});
+			if(maplist) return maplist;
 			else return ({});
 		},
 	},
@@ -92,10 +92,10 @@ module.exports = {
 
 		// },
 		/** 
-		 	@param 	 {object} args - a mapList objectID 
+		 	@param 	 {object} args - a Map objectID 
 			@returns {boolean} true on successful delete, false on failure
 		**/
-		deleteMapList: async (_, args) => {
+		deleteMap: async (_, args) => {
 			const { _id } = args;
 			const objectId = new ObjectId(_id);
 			const deleted = await MapList.deleteOne({_id: objectId});

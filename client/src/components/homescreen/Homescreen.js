@@ -28,22 +28,26 @@ const Homescreen = (props) => {
     // document.onkeydown = keyCombination;
 
     const auth = props.user === null ? false : true;
-    let maps = []; 
     const userName = auth ? props.user.fullName : "";
-
+    let mapLists = []; 
     const [showEdit, toggleShowEdit] 	    = useState(false);
 	const [showLogin, toggleShowLogin] 		= useState(false);
 	const [showCreate, toggleShowCreate] 	= useState(false);
+    const [showDelete, toggleShowDelete] 	= useState(false);
     const [userFullName, setUserName]       = useState(userName);
     // const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
 	// const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
-    const { loading, error, data, refetch } = useQuery(queries.GET_DB_USER);
+    const { loading, error, data, refetch } = useQuery(queries.GET_DB_MAPS);
      if(loading) { console.log(loading, 'loading');}
      if(error){ console.log(error, 'error');}
      if(data){
-         //TODO: Setup loading of maps here
-     }
+        //TODO: Setup loading of maps here
+        console.log(data);
+        for(let maps of data.getAllMaps) {
+			mapLists.push(maps); 
+		} 
 
+     }
      //-------------------Modals Setup-------------------
 
      const setShowLogin = () => {
@@ -63,7 +67,11 @@ const Homescreen = (props) => {
 		toggleShowLogin(false);
 		toggleShowEdit(!showEdit)
 	};
-
+    const setShowDelete = () => {
+		toggleShowCreate(false);
+		toggleShowLogin(false);
+		toggleShowDelete(!showDelete)
+	};
 
     return (
         <WLayout wLayout="header">
@@ -78,7 +86,7 @@ const Homescreen = (props) => {
                         <NavbarOptions 
                             fetchUser={props.fetchUser}     auth={auth} 
 							setShowCreate={setShowCreate} 	setShowLogin={setShowLogin}
-                            setShowEdit={setShowEdit}   
+                            setShowEdit={setShowEdit}       
 							// reloadTodos={refetch} 			//setActiveList={loadTodoList}
                             setUserName={setUserName}       userName={userFullName}   
                         />
@@ -87,7 +95,10 @@ const Homescreen = (props) => {
             </WLHeader>
             <WLMain>
                 {  
-                    <MainContents/>
+                    <MainContents
+                        auth={auth} user={props.user}
+                        activeMapList={mapLists}
+                    />
                     //Setup main contents here
                 }
             </WLMain>

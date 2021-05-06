@@ -25,6 +25,6 @@ const typeDefs = gql `
     }
 `
 module.exports = { typeDefs: typeDefs }
-
+//
 // deleteRegion(mapId:String!, _id:String!):[Region]
 //         addRegion(region:Region!):[Region]
