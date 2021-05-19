@@ -35,13 +35,76 @@ export const EDIT_ACCOUNT = gql`
 		}
 	}
 `;
+
+export const ADD_REGION = gql`
+	mutation AddRegion($region: RegionInput!, $_id: String!, $index: Int!) {
+		addRegion(region: $region, _id: $_id, index: $index)
+	}
+`;
+
+export const DELETE_REGION = gql`
+	mutation DeleteRegion($regionId: String!, $_id: String!) {
+		deleteRegion(regionId: $regionId, _id: $_id) {
+			_id
+			name
+			capital
+			owner
+			leader
+		}
+	}
+`;
+
+export const UPDATE_REGION_FIELD = gql`
+	mutation UpdateRegionField($_id: String!, $regionId: String!, $field: String!, $value: String!, $flag: Int!) {
+		updateRegionField(_id: $_id, regionId: $regionId, field: $field, value: $value, flag: $flag) {
+			_id
+			name
+			capital
+			owner
+			leader
+		}
+	}
+`;
+
+export const REORDER_REGIONS = gql`
+	mutation ReorderRegions($_id: String!, $regionId: String!, $direction: Int!) {
+		reorderRegions(_id: $_id, regionId: $regionId, direction: $direction) {
+			_id
+			name
+			capital
+			owner
+			leader
+		}
+	}
+`;
+
+export const SORT_REGIONS = gql`
+	mutation SortRegions($_id: String!, $criteria: String!) {
+		sortRegions(_id: $_id, criteria: $criteria) {
+			_id
+			name
+			capital
+			owner
+			leader
+		}
+	}
+`;
+
 export const ADD_MAP = gql`
 	mutation AddMap($map: MapInput!) {
 		addMap(map: $map) {
 			_id
 			name
 			owner
-			regionList
+			regions {
+				_id
+				name
+				capital
+				owner
+				leader
+			}
+			sortRule
+			sortDirection
 		}
 	}
 `;
@@ -51,87 +114,10 @@ export const DELETE_MAP = gql`
 		deleteMap(_id: $_id)
 	}
 `;
-// export const ADD_ITEM = gql`
-// 	mutation AddItem($item: ItemInput!, $_id: String!, $index: Int!) {
-// 		addItem(item: $item, _id: $_id, index: $index)
-// 	}
-// `;
 
-// export const DELETE_ITEM = gql`
-// 	mutation DeleteItem($itemId: String!, $_id: String!) {
-// 		deleteItem(itemId: $itemId, _id: $_id) {
-// 			_id
-// 			description
-// 			due_date
-// 			assigned_to
-// 			completed
-// 		}
-// 	}
-// `;
+export const UPDATE_MAP_FIELD = gql`
+	mutation UpdateMapField($_id: String!, $field: String!, $value: String!) {
+		updateMapField(_id: $_id, field: $field, value: $value)
+	}
+`;
 
-// export const UPDATE_ITEM_FIELD = gql`
-// 	mutation UpdateItemField($_id: String!, $itemId: String!, $field: String!, $value: String!, $flag: Int!) {
-// 		updateItemField(_id: $_id, itemId: $itemId, field: $field, value: $value, flag: $flag) {
-// 			_id
-// 			description
-// 			due_date
-// 			assigned_to
-// 			completed
-// 		}
-// 	}
-// `;
-
-// export const REORDER_ITEMS = gql`
-// 	mutation ReorderItems($_id: String!, $itemId: String!, $direction: Int!) {
-// 		reorderItems(_id: $_id, itemId: $itemId, direction: $direction) {
-// 			_id
-// 			description
-// 			due_date
-// 			assigned_to
-// 			completed
-// 		}
-// 	}
-// `;
-
-// export const SORT_ITEMS = gql`
-// 	mutation SortItems($_id: String!, $criteria: String!) {
-// 		sortItems(_id: $_id, criteria: $criteria) {
-// 			_id
-// 			description
-// 			due_date
-// 			assigned_to
-// 			completed
-// 		}
-// 	}
-// `;
-
-// export const ADD_TODOLIST = gql`
-// 	mutation AddTodolist($todolist: TodoInput!) {
-// 		addTodolist(todolist: $todolist) {
-// 			_id
-// 			name
-// 			owner
-// 			items {
-// 				_id
-// 				description
-// 				due_date
-// 				assigned_to
-// 				completed
-// 			}
-// 			sortRule
-// 			sortDirection
-// 		}
-// 	}
-// `;
-
-// export const DELETE_TODOLIST = gql`
-// 	mutation DeleteTodolist($_id: String!) {
-// 		deleteTodolist(_id: $_id)
-// 	}
-// `;
-
-// export const UPDATE_TODOLIST_FIELD = gql`
-// 	mutation UpdateTodolistField($_id: String!, $field: String!, $value: String!) {
-// 		updateTodolistField(_id: $_id, field: $field, value: $value)
-// 	}
-// `;

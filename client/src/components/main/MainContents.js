@@ -15,13 +15,15 @@ const MainContents = (props) => {
             <WCHeader className="map-table-header">
             <MapTableHeader
                 disabled={!props.user._id}        addMap={props.addMap}
-                setShowDelete={props.setShowDelete} setActiveMapList={props.setActiveMapList}     
+                setShowDelete={props.setShowDelete} setActiveMapList={props.setActiveMapList}
+                createNewMap={props.createNewMap}     
             />
             </WCHeader>
             <WCContent className="map-table-content">
             <MapTableContents
                 key={props.user._id}      user={props.user}
-                deleteItem={props.deleteItem}  editItem={props.editItem}        
+                deleteItem={props.deleteItem}  editItem={props.editItem}
+                mapList={props.mapList} 
             />
         
             </WCContent>

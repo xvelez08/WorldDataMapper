@@ -3,7 +3,7 @@ import { WButton, WInput, WRow, WCol } from 'wt-frontend';
 
 const MapTableEntry = (props) => {
     const { data } = props;
-    const mapName = data.name; 
+    const name = data.name; 
     // const completeStyle = data.completed ? ' complete-task' : ' incomplete-task';
     // const assignedToStyle = data.completed ? 'complete-task-assignedTo' : 'incomplete-task-assignedTo';
 
@@ -25,7 +25,7 @@ const MapTableEntry = (props) => {
     const handleNameEdit = (e) => {
         toggleNameEdit(false);
         const newName = e.target.value ? e.target.value : 'No Name';
-        const prevName = mapName;
+        const prevName = name;
         if(newName !== prevName) {
             props.editName(data._id, 'name', newName, prevName);
         }
@@ -75,16 +75,16 @@ const MapTableEntry = (props) => {
         <WRow className='table-entry'>
             <WCol size="6">
                 {
-                    editingName || mapName === ''
+                    editingName || name === ''
                         ? <WInput
                             className='table-input' onBlur={handleNameEdit}
                             onKeyDown={(e) => {if(e.keyCode === 13) handleNameEdit(e)}}
-                            autoFocus={true} defaultValue={mapName} type='text'
+                            autoFocus={true} defaultValue={name} type='text'
                             inputClass="table-input-class"
                         />
                         : <div className="table-text"
                             onClick={() => toggleNameEdit(!editingName)}
-                        >{mapName}
+                        >{name}
                         </div>
                 }
             </WCol>
