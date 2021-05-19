@@ -110,8 +110,10 @@ const MapTableEntry = (props) => {
                     <WButton {...deleteOptions}>
                             <i className="material-icons">delete_outline</i>
                     </WButton>
+                    
             </WCol>
         </WRow>
+        
     );
 };
 

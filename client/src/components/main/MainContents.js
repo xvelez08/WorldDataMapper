@@ -10,29 +10,20 @@ const MainContents = (props) => {
     {
         props.auth ?
                 
-            <WCard wLayout="header-content-media" className="map-table-card">
-							<div className='table ' >
-            <WCHeader className="map-table-header">
+            <div class = "map-table">
             <MapTableHeader
                 disabled={!props.user._id}        addMap={props.addMap}
                 setShowDelete={props.setShowDelete} setActiveMapList={props.setActiveMapList}
                 createNewMap={props.createNewMap}     
             />
-            </WCHeader>
-            <WCContent className="map-table-content">
+           
             <MapTableContents
                 key={props.user._id}      user={props.user}
                 deleteItem={props.deleteItem}  editItem={props.editItem}
                 mapList={props.mapList} 
             />
-        
-            </WCContent>
-            <WCMedia className="map-table-media">
-            <i class="fas fa-globe-americas fa-10x globe2"></i>
-
-            </WCMedia>
                 </div>
-            </WCard>
+            
 				:
         <WCard wLayout="content"  className="welcome-content-card">
             <WCContent>

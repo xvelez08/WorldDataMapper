@@ -45,8 +45,8 @@ const MapTableHeader = (props) => {
                         <i className="material-icons">close</i>
                     </WButton> */}
                 </div>
-            </WCol>
-
+                <i class="fas fa-globe-americas fa-10x globe2"></i>
+            </WCol>            
         </WRow>
     );
 };

@@ -129,6 +129,7 @@ const Homescreen = (props) => {
 	};
 
     return (
+        
         <WLayout wLayout="header">
             <WLHeader>
                 <WNavbar color="colored">
@@ -154,8 +155,10 @@ const Homescreen = (props) => {
                         auth={auth} user={props.user}
                         mapList={mapLists} createNewMap={createNewMap}
                     />
+                    
                     //Setup main contents here
                 }
+              
             </WLMain>
             {
 				showEdit && (<EditAccount user = {props.user} fetchUser={props.fetchUser} setShowEdit={setShowEdit} />)

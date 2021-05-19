@@ -21,7 +21,7 @@ const MapTableContents = (props) => {
                     />
                 ))
             }
-
+            
             </div>
             : <div className='container-primary' >
                 {/* {
