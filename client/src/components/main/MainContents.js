@@ -20,15 +20,15 @@ const MainContents = (props) => {
             <MapTableContents
                 key={props.user._id}      user={props.user}
                 deleteItem={props.deleteItem}  editItem={props.editItem}
-                mapList={props.mapList} 
+                mapList={props.mapList} updateMapField={props.updateMapField}
             />
                 </div>
             
 				:
         <WCard wLayout="content"  className="welcome-content-card">
             <WCContent>
-                <div class="icon-container">
-                <i class="fas fa-globe-americas fa-10x"></i>
+                <div className="icon-container">
+                <i className="fas fa-globe-americas fa-10x"></i>
                 <h1 id="welcome-msg">Welcome to the World Data Mapper</h1>
                 </div>
             </WCContent>

@@ -10,9 +10,15 @@ import React, { useState } 				from 'react';
 import { useMutation, useQuery } 		from '@apollo/client';
 import { WNavbar, WNavItem }            from 'wt-frontend';
 import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
+import { UpdateMapField_Transaction, 
+	SortItems_Transaction,
+	UpdateMapRegion_Transaction, 
+	ReorderItems_Transaction, 
+	EditRegion_Transaction } 				from '../../utils/jsTPS';
+
+
 const ObjectId = require('mongoose').Types.ObjectId;
 // TODO: Will need to import different transactions here to use 
-
 const Homescreen = (props) => {
     // const keyCombination = (e, callback) => {
 	// 	if(e.key === 'z' && e.ctrlKey) {
@@ -36,8 +42,8 @@ const Homescreen = (props) => {
 	const [showCreate, toggleShowCreate] 	= useState(false);
     const [showDelete, toggleShowDelete] 	= useState(false);
     const [userFullName, setUserName]       = useState(userName);
-    // const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
-	// const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
+    const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
+	const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
      const { loading, error, data, refetch } = useQuery(GET_DB_MAPS);
      if(loading) { console.log(loading, 'loading');}
      if(error){ console.log(error, 'error');}
@@ -57,13 +63,27 @@ const Homescreen = (props) => {
 	// const [ReorderMapItems] 		= useMutation(mutations.REORDER_ITEMS, mutationOptions);
 	// const [sortMapItems] 		    = useMutation(mutations.SORT_ITEMS, mutationOptions);
 	// const [UpdateMapItemField] 	= useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
-	// const [UpdateMaplistField] 	= useMutation(mutations.UPDATE_MAP_FIELD, mutationOptions);
+	const [UpdateMapField] 	= useMutation(mutations.UPDATE_MAP_FIELD, mutationOptions);
 	// const [DeleteMapItem] 			= useMutation(mutations.DELETE_REGION, mutationOptions);
 	// const [AddMapItem] 			= useMutation(mutations.ADD_REGION, mutationOptions);
 	const    [AddMap] 			        = useMutation(mutations.ADD_MAP);
     
 	// const [DeleteTodolist] 			= useMutation(mutations.DELETE_TODOLIST);
+    const tpsUndo = async () => {
+		const ret = await props.tps.undoTransaction();
+		if(ret) {
+			setCanUndo(props.tps.hasTransactionToUndo());
+			setCanRedo(props.tps.hasTransactionToRedo());
+		}
+	}
 
+	const tpsRedo = async () => {
+		const ret = await props.tps.doTransaction();
+		if(ret) {
+			setCanUndo(props.tps.hasTransactionToUndo());
+			setCanRedo(props.tps.hasTransactionToRedo());
+		}
+	}
 
     const refetchMaps = async (refetch) => {
 		const { loading, error, data } = await refetch();
@@ -101,7 +121,11 @@ const Homescreen = (props) => {
              }
      }
 
-
+     const updateMapField = async (_id, field, value, prev) => {
+         let transaction = new UpdateMapField_Transaction(_id, field, prev, value, UpdateMapField);
+         props.tps.addTransaction(transaction);
+         tpsRedo();
+     }
 
      //-------------------Modals Setup-------------------
 
@@ -152,7 +176,7 @@ const Homescreen = (props) => {
             <WLMain>
                 {  
                     <MainContents
-                        auth={auth} user={props.user}
+                        auth={auth} user={props.user} updateMapField={updateMapField}
                         mapList={mapLists} createNewMap={createNewMap}
                     />
                     

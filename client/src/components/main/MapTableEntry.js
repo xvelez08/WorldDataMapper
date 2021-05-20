@@ -13,7 +13,7 @@ const MapTableEntry = (props) => {
         const newName = e.target.value ? e.target.value : 'No Name';
         const prevName = name;
         if(newName !== prevName) {
-            props.editName(data._id, 'name', newName, prevName);
+            props.updateMapField(data._id, 'name', newName, prevName);
         }
 
     };

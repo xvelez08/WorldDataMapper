@@ -2,13 +2,13 @@ import React            from 'react';
 import Homescreen       from './components/homescreen/Homescreen';
 import { useQuery }     from '@apollo/client';
 import * as queries     from './cache/queries';
-// TODO: Need to import JSTPS later
+import {jsTPS}          from './utils/jsTPS'; 
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 const App = () => {
     let user = null;
-    // TODO: Create transaction stack here 
-
+    let transactionStack = new jsTPS(); 
+    let refreshTps = false; //Flag to reset transaction stack 
     const { loading, error, data, refetch } = useQuery(queries.GET_DB_USER);
     
     if(error){ console.log(error); }
@@ -27,7 +27,10 @@ const App = () => {
                     path = "/home"
                     name = "home"
                     render={()=>
-                        <Homescreen fetchUser={refetch} user={user} /> // TODO: Add tps here also also find out about 2nd route
+                        <Homescreen fetchUser={refetch} user={user} 
+                                    tps = {transactionStack} refreshTps = {refreshTps}
+                        /> // TODO: Add tps here also also find out about 2nd route
+                        
                     }
                 />
                 <Route/>
