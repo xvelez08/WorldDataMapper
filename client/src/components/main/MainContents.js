@@ -18,7 +18,7 @@ const MainContents = (props) => {
             />
            
             <MapTableContents
-                key={props.user._id}      user={props.user}
+                key={props.user._id}      user={props.user} setShowDelete={props.setShowDelete}
                 deleteItem={props.deleteItem}  editItem={props.editItem}
                 mapList={props.mapList} updateMapField={props.updateMapField}
             />

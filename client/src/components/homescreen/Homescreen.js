@@ -4,6 +4,7 @@ import CreateAccount 					from '../modals/CreateAccount';
 import NavbarOptions 					from '../navbar/NavbarOptions';
 import EditAccount                      from '../modals/EditAccount';
 import MainContents 					from '../main/MainContents';
+import Delete                           from '../modals/Delete'     
 import * as mutations 					from '../../cache/mutations';
 import { GET_DB_MAPS } 				    from '../../cache/queries';
 import React, { useState } 				from 'react';
@@ -42,6 +43,7 @@ const Homescreen = (props) => {
 	const [showCreate, toggleShowCreate] 	= useState(false);
     const [showDelete, toggleShowDelete] 	= useState(false);
     const [userFullName, setUserName]       = useState(userName);
+    const [activeMap, setActiveMap]         = useState(null);
     const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
 	const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
      const { loading, error, data, refetch } = useQuery(GET_DB_MAPS);
@@ -68,7 +70,7 @@ const Homescreen = (props) => {
 	// const [AddMapItem] 			= useMutation(mutations.ADD_REGION, mutationOptions);
 	const    [AddMap] 			        = useMutation(mutations.ADD_MAP);
     
-	// const [DeleteTodolist] 			= useMutation(mutations.DELETE_TODOLIST);
+	const [DeleteMap] 			= useMutation(mutations.DELETE_MAP);
     const tpsUndo = async () => {
 		const ret = await props.tps.undoTransaction();
 		if(ret) {
@@ -126,6 +128,11 @@ const Homescreen = (props) => {
          props.tps.addTransaction(transaction);
          tpsRedo();
      }
+     const deleteMap = async (_id) => {
+        console.log(_id);
+		DeleteMap({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_MAPS }] });
+		console.log("Map deleted:  "+ _id)
+	};
 
      //-------------------Modals Setup-------------------
 
@@ -146,7 +153,8 @@ const Homescreen = (props) => {
 		toggleShowLogin(false);
 		toggleShowEdit(!showEdit)
 	};
-    const setShowDelete = () => {
+    const setShowDelete = (_id) => {
+        setActiveMap(_id); 
 		toggleShowCreate(false);
 		toggleShowLogin(false);
 		toggleShowDelete(!showDelete)
@@ -177,7 +185,7 @@ const Homescreen = (props) => {
                 {  
                     <MainContents
                         auth={auth} user={props.user} updateMapField={updateMapField}
-                        mapList={mapLists} createNewMap={createNewMap}
+                        mapList={mapLists} createNewMap={createNewMap} setShowDelete={setShowDelete}
                     />
                     
                     //Setup main contents here
@@ -196,6 +204,10 @@ const Homescreen = (props) => {
                 //TODO: replace reloadTodos={refetch} here 
 				showLogin && (<Login setUserName={setUserName}   fetchUser={props.fetchUser} setShowLogin={setShowLogin} />)
 			}
+            
+            {
+                showDelete && (<Delete deleteMap ={deleteMap} setShowDelete={setShowDelete} activeMap={activeMap}/>)
+            }
 
         </WLayout>
 

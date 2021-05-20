@@ -4,6 +4,7 @@ import { WButton, WInput, WRow, WCol } from 'wt-frontend';
 const MapTableEntry = (props) => {
     const { data } = props;
     const name = data.name; 
+    const mapid = data._id; 
     const [editingName, toggleNameEdit] = useState(false);
 
     const disabledButton = () => {}
@@ -67,7 +68,7 @@ const MapTableEntry = (props) => {
                 {
 
                     <WButton title="Edit Name" color="colored" shape="rounded" hoverAnimation= "lighten"
-                                onClick={(e) => toggleNameEdit(!editingName)}
+                                onClick={() => toggleNameEdit(!editingName)}
                     >
                             <i className="material-icons entry-button">edit</i>
                     </WButton>
@@ -84,7 +85,7 @@ const MapTableEntry = (props) => {
             </WCol>
             <WCol size="1" className="table-entry-col">
                     <WButton title="Delete Map"  color="colored" shape="rounded" hoverAnimation= "lighten"
-                                onClick={(e) => toggleNameEdit(!editingName)}>
+                                onClick={() => props.setShowDelete(mapid, name) }>
                             <i className="material-icons entry-button">delete_outline</i>
                     </WButton>
                     

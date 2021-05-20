@@ -16,7 +16,7 @@ const MapTableContents = (props) => {
             {
                 entries.map((entry, index) => (
                     <MapTableEntry
-                        data={entry} key={entry._id} index={index} 
+                        data={entry} key={entry._id} index={index}  setShowDelete={props.setShowDelete}
                         deleteItem={props.deleteItem} updateMapField ={props.updateMapField}
                     />
                 ))
