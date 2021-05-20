@@ -36,10 +36,7 @@ const MapTableHeader = (props) => {
                             <i className="material-icons">redo</i>
                     </WButton> */}
                     <WButton onClick={props.disabled ? clickDisabled : props.createNewMap} wType="texted" className={`${buttonStyle}`} clickAnimation={props.disabled ? "" : "ripple-light" }>
-                        <i className="material-icons">add_box</i>
-                    </WButton>
-                    <WButton onClick={props.disabled ? clickDisabled : props.setShowDelete} wType="texted" className={`${buttonStyle}`} clickAnimation={props.disabled ? "" : "ripple-light" }>
-                        <i className="material-icons">delete_outline</i>
+                        <i className="material-icons" id="add-button">add_box</i>
                     </WButton>
                     {/* <WButton onClick={props.disabled ? clickDisabled : () => props.setActiveList({})} wType="texted" className={`${buttonStyle}`} clickAnimation={props.disabled ? "" : "ripple-light" }>
                         <i className="material-icons">close</i>

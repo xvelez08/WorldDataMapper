@@ -7,7 +7,7 @@ import { WButton, WNavItem }                from 'wt-frontend';
 const LoggedIn = (props) => {
     const client = useApolloClient();
 	const [Logout] = useMutation(LOGOUT);
-
+    const name = props.userName; 
     const handleLogout = async (e) => {
         Logout();
         const { data } = await props.fetchUser();
@@ -21,7 +21,7 @@ const LoggedIn = (props) => {
         <>
         <WNavItem hoverAnimation="lighten">
                 <WButton clickAnimation="ripple-light" shape="pill" id="editAccount" className="navbar-options" onClick={props.setShowEdit} wType="texted" hoverAnimation="text-primary">
-                    {props.userName}  
+                    {name}  
                 </WButton>
         </WNavItem>
         

@@ -4,21 +4,7 @@ import { WButton, WInput, WRow, WCol } from 'wt-frontend';
 const MapTableEntry = (props) => {
     const { data } = props;
     const name = data.name; 
-    // const completeStyle = data.completed ? ' complete-task' : ' incomplete-task';
-    // const assignedToStyle = data.completed ? 'complete-task-assignedTo' : 'incomplete-task-assignedTo';
-
-    // const description = data.description;
-    // const due_date = data.fullName;
-    // const status = data.completed ? 'complete' : 'incomplete';
-    // const assigned_to = data.assigned_to;
-
-    // const canMoveUp = props.index > 0 ? true : false;
-    // const canMoveDown = props.index < props.entryCount-1 ? true : false;
-    
     const [editingName, toggleNameEdit] = useState(false);
-    // const [editingDescr, toggleDescrEdit] = useState(false);
-    // const [editingStatus, toggleStatusEdit] = useState(false);
-    // const [editingAssigned, toggleAssignEdit] = useState(false);
 
     const disabledButton = () => {}
 
