@@ -44,18 +44,7 @@ const MapTableEntry = (props) => {
     //         props.editItem(data._id, 'assigned_to', newAssigned, prevAssigned);
     //     }
     // }
-    // const editOptions = {
-    //     onClick:'{() => toggleNameEdit(!editingName)}',
-    //     wType: "texted", 
-    //     clickAnimation: props.disabled || !props.canRedo ? "" : "ripple-light" ,
-    //     shape: "rounded"
-    // }
-    const deleteOptions = {
-        onClick:"{() => handleDelete()}",
-        wType: "texted", 
-        clickAnimation: props.disabled || !props.canRedo ? "" : "ripple-light" ,
-        shape: "rounded"
-    }
+    
 
     return (
         <WRow className='table-entry'>
