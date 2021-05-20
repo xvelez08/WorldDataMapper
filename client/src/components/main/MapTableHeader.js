@@ -24,10 +24,10 @@ const MapTableHeader = (props) => {
 
     return (
         <WRow className="table-header">
-            <WCol size="8">
+            <WCol size="10">
                 <WButton onClick={props.disabled ? () => {} : () => props.sort('task') } className='table-header-section' wType="texted" >Maps</WButton>
             </WCol>
-            <WCol size="4">
+            <WCol size="2">
                 <div className="table-header-buttons">
                     {/* <WButton {...undoOptions}>
                             <i className="material-icons">undo</i>

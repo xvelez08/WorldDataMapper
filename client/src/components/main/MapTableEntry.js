@@ -58,12 +58,12 @@ const MapTableEntry = (props) => {
     //         props.editItem(data._id, 'assigned_to', newAssigned, prevAssigned);
     //     }
     // }
-    const editOptions = {
-        onClick:"{() => toggleDescrEdit(!editingDescr)}",
-        wType: "texted", 
-        clickAnimation: props.disabled || !props.canRedo ? "" : "ripple-light" ,
-        shape: "rounded"
-    }
+    // const editOptions = {
+    //     onClick:'{() => toggleNameEdit(!editingName)}',
+    //     wType: "texted", 
+    //     clickAnimation: props.disabled || !props.canRedo ? "" : "ripple-light" ,
+    //     shape: "rounded"
+    // }
     const deleteOptions = {
         onClick:"{() => handleDelete()}",
         wType: "texted", 
@@ -73,7 +73,7 @@ const MapTableEntry = (props) => {
 
     return (
         <WRow className='table-entry'>
-            <WCol size="6">
+            <WCol size="10">
                 {
                     editingName || name === ''
                         ? <WInput
@@ -83,17 +83,18 @@ const MapTableEntry = (props) => {
                             inputClass="table-input-class"
                         />
                         : <div className="table-text"
-                            onClick={() => toggleNameEdit(!editingName)}
                         >{name}
                         </div>
                 }
             </WCol>
 
-            <WCol size="3">
+            <WCol size="1" className="table-entry-col">
                 {
 
-                    <WButton {...editOptions}>
-                            <i className="material-icons">edit</i>
+                    <WButton title="Edit Name" color="colored" shape="rounded" hoverAnimation= "lighten"
+                                onClick={(e) => toggleNameEdit(!editingName)}
+                    >
+                            <i className="material-icons entry-button">edit</i>
                     </WButton>
                     // editingDate ? <WInput
                     //     className='table-input' onBlur={handleDateEdit}
@@ -106,9 +107,10 @@ const MapTableEntry = (props) => {
                     //     </div>
                 }
             </WCol>
-            <WCol size="3">
-                    <WButton {...deleteOptions}>
-                            <i className="material-icons">delete_outline</i>
+            <WCol size="1" className="table-entry-col">
+                    <WButton title="Delete Map"  color="colored" shape="rounded" hoverAnimation= "lighten"
+                                onClick={(e) => toggleNameEdit(!editingName)}>
+                            <i className="material-icons entry-button">delete_outline</i>
                     </WButton>
                     
             </WCol>

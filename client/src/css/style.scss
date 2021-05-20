@@ -10,6 +10,7 @@
     $modal-button-color:#6B6666,
     $modal-button-hover: #e9edf0,
     $button-text-color: white,
+    $button-background-color:#6B6666
     // other variable changes here
 );
 
@@ -175,4 +176,7 @@ html, body {
 }
 .globe2{
     color: white;
+}
+.butty{
+    padding-left:10px;
 }
