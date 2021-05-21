@@ -60,7 +60,12 @@ const RegionTableEntry = (props) => {
     // }
 
     return (
-        <WRow className='table-entry'>
+        <WRow className='region-table-entry'>
+            <WCol size="1">
+            <WButton className="table-entry-buttons" onClick={() => props.deleteRegion(data, props.index)} wType="texted">
+                        <i className="material-icons region-close">close</i>
+                    </WButton>
+            </WCol>
             <WCol size="3">
                 {
                     editingName || name === ''
@@ -108,33 +113,36 @@ const RegionTableEntry = (props) => {
             </WCol>
 
             <WCol size="2">
-                {
-                    // editingAssigned || assigned_to === ''
-                    //     ? <WInput
-                    //         className='table-input' onBlur={handleAssignEdit}
-                    //         onKeyDown={(e) => {if(e.keyCode === 13) handleAssignEdit(e)}}
-
-                    //         autoFocus={true} defaultValue={assigned_to} type='text'
-                    //         /*wType="outlined" barAnimation="solid" */inputclass="table-input-class"
-                    //     />
-                    //     : <div className={`${assignedToStyle} table-text`}
-                    //         onClick={() => toggleAssignEdit(!editingAssigned)}
-                    //     >{assigned_to}
-                    //     </div>
-                }
+                
+                    {
+                        editingLeader || leader === ''
+                        ? <WInput
+                            className='table-input' onBlur={handleLeaderEdit}
+                            onKeyDown={(e) => {if(e.keyCode === 13) handleLeaderEdit(e)}}
+                            autoFocus={true} defaultValue={leader} type='text'
+                            inputClass="table-input-class"
+                        />
+                        : <div className="table-text"
+                            onClick={() => toggleLeaderEdit(!editingLeader)}
+                        >{leader}
+                        </div>
+                     }
+                
             </WCol>
-            <WCol size="3">
-                <div className='button-group'>
-                    <WButton className={canMoveUp ? "table-entry-buttons" : "table-entry-buttons-disabled"} onClick={canMoveUp ? () => props.reorderRegion(data._id, -1) : disabledButton } wType="texted">
-                        <i className="material-icons">expand_less</i>
-                    </WButton>
-                    <WButton className={canMoveDown ? "table-entry-buttons" : "table-entry-buttons-disabled"} onClick={canMoveDown ? () => props.reorderRegion(data._id, 1) : disabledButton } wType="texted">
-                        <i className="material-icons">expand_more</i>
-                    </WButton>
-                    <WButton className="table-entry-buttons" onClick={() => props.deleteRegion(data, props.index)} wType="texted">
-                        <i className="material-icons">close</i>
-                    </WButton>
-                </div>
+            <WCol size="2">
+                {
+                   editingLeader || leader === ''
+                   ? <WInput
+                       className='table-input' onBlur={handleLeaderEdit}
+                       onKeyDown={(e) => {if(e.keyCode === 13) handleLeaderEdit(e)}}
+                       autoFocus={true} defaultValue={leader} type='text'
+                       inputClass="table-input-class"
+                   />
+                   : <div className="table-text"
+                       onClick={() => toggleLeaderEdit(!editingLeader)}
+                   >{leader}
+                   </div>
+                }
             </WCol>
         </WRow>
     );

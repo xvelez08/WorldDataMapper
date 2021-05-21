@@ -39,7 +39,8 @@ const RegionHomescreen = (props) => {
     const auth = props.user === null ? false : true;
     const userName = auth ? props.user.fullName : "";
     let mapLists = []; 
-    let regionList = [];  
+    let regionList = []; 
+    let mapName = "";
     const [showEdit, toggleShowEdit] 	    = useState(false);
 	const [showLogin, toggleShowLogin] 		= useState(false);
 	const [showCreate, toggleShowCreate] 	= useState(false);
@@ -57,10 +58,12 @@ const RegionHomescreen = (props) => {
             if(map._id == props.activeMap){
                 regionList = map.regions;
                 console.log(regionList);
+                mapName = map.name;
             } 
         }
-        // console.log(data.getAllMaps);
-        // console.log(props.activeMap);
+        console.log(mapName);
+        console.log(data.getAllMaps);
+        console.log(props.activeMap);
         let currentMap = props.activeMap;
 
      }
@@ -209,16 +212,18 @@ const RegionHomescreen = (props) => {
             </WLHeader>
             <WLMain>
                 {  
-                    <>
-                    <WButton onClick={addRegion} wType="texted"  clickAnimation={"ripple-light" }>
-                    <i className="material-icons" id="add-region-button">add_box</i>
+                   
+                    <div className="add-region-button-header">
+                    <WButton id="add-region-btn" onClick={addRegion} wType="texted"  clickAnimation={"ripple-light" }>
+                    <i className="material-icons" id="add-region-icon">add_box</i>
                     </WButton>
+                    <h1>Map: {mapName}</h1>
                     <RegionMainContents
                         auth={auth} user={props.user} updateMapField={updateMapField}
                         activeMap={props.activeMap} createNewMap={createNewMap} setShowDelete={setShowDelete}
-                        displayMap={displayMap}  regions={regionList}
+                        mapName={mapName}  regions={regionList}
                     />
-                    </>
+                   </div>
                     //Setup main contents here
                 }
               

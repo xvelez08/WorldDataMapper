@@ -182,9 +182,19 @@ html, body {
     margin: 5%;
     border: 1px solid white;
     border-radius: 3%;
-    height: 80%;
+    height: 100%;
 }
 
-.region-header{
-    border-right: 1px solid white !important;
+.region-close{
+    color:white;
+}
+.region-table-entry {
+    border-bottom: 1px solid;
+    color: $text-color;
+    transition: 0.05s ease-in-out;
+    height: 46px;
+}
+
+#add-region-icon{
+    color:green;
 }

@@ -12,6 +12,7 @@ const RegionMainContents = (props) => {
     {
         props.auth ?
             
+            
             <div className = "region-table">
             <RegionTableHeader
                 disabled={!props.user._id}        addMap={props.addMap}
