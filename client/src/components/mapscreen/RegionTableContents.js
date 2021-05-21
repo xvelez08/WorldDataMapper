@@ -3,8 +3,9 @@ import RegionTableEntry   from './RegionTableEntry';
 
 const RegionTableContents = (props) => {
 
-    let entries = props.activeMap._id ? props.activeMap.regions : null;
+    let entries = props.activeMap ? props.regions : null;
     let entryCount = 0;
+    console.log(entryCount);
     if(entries) {
         entries = entries.filter(entry => entry !== null);
         entryCount = entries.length

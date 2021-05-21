@@ -17,7 +17,7 @@ const MainContents = (props) => {
             <div className = "map-table">
             <MapTableHeader
                 disabled={!props.user._id}        addMap={props.addMap}
-                setShowDelete={props.setShowDelete} setActiveMapList={props.setActiveMapList}
+                setShowDelete={props.setShowDelete} 
                 createNewMap={props.createNewMap}     
             />
            

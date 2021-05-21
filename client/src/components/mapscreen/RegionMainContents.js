@@ -15,13 +15,13 @@ const RegionMainContents = (props) => {
             <div className = "region-table">
             <RegionTableHeader
                 disabled={!props.user._id}        addMap={props.addMap}
-                setShowDelete={props.setShowDelete} setActiveMapList={props.setActiveMapList}
+                setShowDelete={props.setShowDelete}
                 createNewMap={props.createNewMap}     
             />
            
             <RegionTableContents
                 key={props.user._id}      user={props.user} setShowDelete={props.setShowDelete}
-                deleteItem={props.deleteItem}  editItem={props.editItem}
+                deleteItem={props.deleteItem}  editItem={props.editItem}    regions={props.regions}
                 activeMap={props.activeMap} updateMapField={props.updateMapField}
             />
                 </div>

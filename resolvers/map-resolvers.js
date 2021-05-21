@@ -251,6 +251,7 @@ module.exports = {
 			const found = await Map.findOne({_id: listId});
 			if(!found) return ('Map not found');
 			if(region._id === '') region._id = objectId;
+			console.log(region._id)
 			let listRegions = found.regions;
 			if(index < 0) listRegions.push(region);
 			else listRegions.splice(index, 0, region);

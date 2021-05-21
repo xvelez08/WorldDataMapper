@@ -19,7 +19,7 @@ import { UpdateMapField_Transaction,
 	EditRegion_Transaction } 				from '../../utils/jsTPS';
 
 
-const ObjectId = require('mongoose').Types.ObjectId;
+
 // TODO: Will need to import different transactions here to use 
 const RegionHomescreen = (props) => {
     // const keyCombination = (e, callback) => {
@@ -39,6 +39,7 @@ const RegionHomescreen = (props) => {
     const auth = props.user === null ? false : true;
     const userName = auth ? props.user.fullName : "";
     let mapLists = []; 
+    let regionList = [];  
     const [showEdit, toggleShowEdit] 	    = useState(false);
 	const [showLogin, toggleShowLogin] 		= useState(false);
 	const [showCreate, toggleShowCreate] 	= useState(false);
@@ -52,11 +53,18 @@ const RegionHomescreen = (props) => {
      if(error){ console.log(error, 'error');}
      if(data){
         for(let map of data.getAllMaps){
-            mapLists.push(map); 
+            mapLists.push(map);
+            if(map._id == props.activeMap){
+                regionList = map.regions;
+                console.log(regionList);
+            } 
         }
-        console.log(data.getAllMaps);
+        // console.log(data.getAllMaps);
+        // console.log(props.activeMap);
+        let currentMap = props.activeMap;
 
      }
+     console.log(props.activeMap);
      const mutationOptions = {
 		refetchQueries: [{ query: GET_DB_MAPS }], 
 		awaitRefetchQueries: true,
@@ -136,18 +144,17 @@ const RegionHomescreen = (props) => {
 	};
     const addRegion = async () => {
 		let map = props.activeMap;
-		const regions = map.regions;
 		const newRegion = {
 			_id: '',
             name: 'No Name',
 			capital: 'No Description',
-            owner: map._id,
+            owner: '',
 			leader: 'No Date'
 
 		};
 		let opcode = 1;
 		let regionID = newRegion._id;
-		let mapID = map._id;
+		let mapID = map;
 		let transaction = new UpdateMapRegion_Transaction(mapID, regionID, newRegion, opcode, AddRegion, DeleteRegion);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
@@ -203,13 +210,13 @@ const RegionHomescreen = (props) => {
             <WLMain>
                 {  
                     <>
-                    <WButton onClick={addRegion} wType="texted"  clickAnimation={props.disabled ? "" : "ripple-light" }>
+                    <WButton onClick={addRegion} wType="texted"  clickAnimation={"ripple-light" }>
                     <i className="material-icons" id="add-region-button">add_box</i>
                     </WButton>
                     <RegionMainContents
                         auth={auth} user={props.user} updateMapField={updateMapField}
                         activeMap={props.activeMap} createNewMap={createNewMap} setShowDelete={setShowDelete}
-                        displayMap={displayMap} 
+                        displayMap={displayMap}  regions={regionList}
                     />
                     </>
                     //Setup main contents here
