@@ -1,11 +1,9 @@
 import React                            from 'react';
-import {WCard, WCFooter,WCContent, WCMedia, WCHeader}      from 'wt-frontend';
+import {WCard, WCFooter,WCContent, WCMedia, WCHeader, WButton}      from 'wt-frontend';
 import { FaGlobeAmericas }              from 'react-icons/fa';
-import MapTableHeader                      from './MapTableHeader';
-import MapTableContents                    from './MapTableContents';
-import RegionTableHeader from '../mapscreen/RegionTableHeader';
+import RegionTableHeader                   from './RegionTableHeader';
 import RegionTableContents from '../mapscreen/RegionTableContents';
-const MainContents = (props) => {
+const RegionMainContents = (props) => {
     const authRegion = props.displayMap === null ? false : true; 
     
     return (
@@ -14,17 +12,17 @@ const MainContents = (props) => {
     {
         props.auth ?
             
-            <div className = "map-table">
-            <MapTableHeader
+            <div className = "region-table">
+            <RegionTableHeader
                 disabled={!props.user._id}        addMap={props.addMap}
                 setShowDelete={props.setShowDelete} setActiveMapList={props.setActiveMapList}
                 createNewMap={props.createNewMap}     
             />
            
-            <MapTableContents
+            <RegionTableContents
                 key={props.user._id}      user={props.user} setShowDelete={props.setShowDelete}
-                deleteItem={props.deleteItem}  editItem={props.editItem}    handleMapClick={props.handleMapClick}
-                mapList={props.mapList} updateMapField={props.updateMapField}
+                deleteItem={props.deleteItem}  editItem={props.editItem}
+                activeMap={props.activeMap} updateMapField={props.updateMapField}
             />
                 </div>
             
@@ -44,4 +42,4 @@ const MainContents = (props) => {
     );
 };
 
-export default MainContents;
+export default RegionMainContents;

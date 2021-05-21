@@ -58,7 +58,7 @@ const MapTableEntry = (props) => {
                             autoFocus={true} defaultValue={name} type='text'
                             inputClass="table-input-class"
                         />
-                        : <div className="table-text"
+                        : <div className="table-text" onClick={()=>props.handleMapClick(mapid)}
                         >{name}
                         </div>
                 }
@@ -85,7 +85,7 @@ const MapTableEntry = (props) => {
             </WCol>
             <WCol size="1" className="table-entry-col">
                     <WButton title="Delete Map"  color="colored" shape="rounded" hoverAnimation= "lighten"
-                                onClick={() => props.setShowDelete(mapid, name) }>
+                                onClick={() => props.setShowDelete(mapid) }>
                             <i className="material-icons entry-button">delete_outline</i>
                     </WButton>
                     

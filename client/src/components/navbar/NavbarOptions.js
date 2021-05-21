@@ -14,6 +14,7 @@ const LoggedIn = (props) => {
         if (data) {
             let reset = await client.resetStore();
             // if (reset) props.setActiveList({});
+            name = props.userName; 
         }
     };
     

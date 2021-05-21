@@ -3,15 +3,14 @@ import Login 							from '../modals/Login';
 import CreateAccount 					from '../modals/CreateAccount';
 import NavbarOptions 					from '../navbar/NavbarOptions';
 import EditAccount                      from '../modals/EditAccount';
-import MainContents 					from '../main/MainContents';
+import RegionMainContents 				from '../mapscreen/RegionMainContents';
 import Delete                           from '../modals/Delete'     
 import * as mutations 					from '../../cache/mutations';
 import { GET_DB_MAPS } 				    from '../../cache/queries';
-import React, { useState, useCallback } from 'react';
-import {Redirect}                       from 'react-router';
-import { useHistory }                   from "react-router-dom";
+import React, { useState } 				from 'react';
+import {Redirect}                       from 'react-router'; 
 import { useMutation, useQuery } 		from '@apollo/client';
-import { WNavbar, WNavItem }            from 'wt-frontend';
+import { WNavbar, WNavItem, WButton }            from 'wt-frontend';
 import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
 import { UpdateMapField_Transaction, 
 	SortItems_Transaction,
@@ -22,7 +21,7 @@ import { UpdateMapField_Transaction,
 
 const ObjectId = require('mongoose').Types.ObjectId;
 // TODO: Will need to import different transactions here to use 
-const Homescreen = (props) => {
+const RegionHomescreen = (props) => {
     // const keyCombination = (e, callback) => {
 	// 	if(e.key === 'z' && e.ctrlKey) {
 	// 		if(props.tps.hasTransactionToUndo()) {
@@ -40,17 +39,15 @@ const Homescreen = (props) => {
     const auth = props.user === null ? false : true;
     const userName = auth ? props.user.fullName : "";
     let mapLists = []; 
-    let history = useHistory(); 
     const [showEdit, toggleShowEdit] 	    = useState(false);
 	const [showLogin, toggleShowLogin] 		= useState(false);
 	const [showCreate, toggleShowCreate] 	= useState(false);
     const [showDelete, toggleShowDelete] 	= useState(false);
-    const [userFullName, setUserName]       = useState(userName);   
-    const [deleteMap, setDeleteMap]         = useState(null);
-    const [displayMap, setDisplayMap]       = useState(null); 
+    const [userFullName, setUserName]       = useState(userName);
+    const [displayMap, setDisplayMap]       = useState(null);
     const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
 	const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
-    const { loading, error, data, refetch } = useQuery(GET_DB_MAPS);
+     const { loading, error, data, refetch } = useQuery(GET_DB_MAPS);
      if(loading) { console.log(loading, 'loading');}
      if(error){ console.log(error, 'error');}
      if(data){
@@ -66,15 +63,15 @@ const Homescreen = (props) => {
 		// onCompleted: () => reloadList()
 	}
 
-	// const [ReorderMapItems] 		= useMutation(mutations.REORDER_ITEMS, mutationOptions);
+	// const [ReorderMapItems] 		    = useMutation(mutations.REORDER_ITEMS, mutationOptions);
 	// const [sortMapItems] 		    = useMutation(mutations.SORT_ITEMS, mutationOptions);
-	// const [UpdateMapItemField] 	= useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
-	const [UpdateMapField] 	= useMutation(mutations.UPDATE_MAP_FIELD, mutationOptions);
-	// const [DeleteMapItem] 			= useMutation(mutations.DELETE_REGION, mutationOptions);
-	// const [AddMapItem] 			= useMutation(mutations.ADD_REGION, mutationOptions);
+	const [UpdateMapItemField] 	    = useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
+	const [UpdateMapField] 	            = useMutation(mutations.UPDATE_MAP_FIELD, mutationOptions);
+	const [AddRegion] 			    = useMutation(mutations.ADD_REGION, mutationOptions);
+	const [DeleteRegion] 			= useMutation(mutations.DELETE_REGION, mutationOptions);
 	const    [AddMap] 			        = useMutation(mutations.ADD_MAP);
+	const [DeleteMap] 			        = useMutation(mutations.DELETE_MAP);
     
-	const [DeleteMap] 			= useMutation(mutations.DELETE_MAP);
     const tpsUndo = async () => {
 		const ret = await props.tps.undoTransaction();
 		if(ret) {
@@ -105,7 +102,8 @@ const Homescreen = (props) => {
 	}
 
 
-    const createNewMap = async () => {
+
+     const createNewMap = async () => {
          let newmap = {
              _id: '',
              name: "Untitled",
@@ -131,19 +129,30 @@ const Homescreen = (props) => {
          props.tps.addTransaction(transaction);
          tpsRedo();
      }
-    //  const deleteMap = async (_id) => {
-    //     console.log(_id);
-	// 	DeleteMap({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_MAPS }] });
-	// 	console.log("Map deleted:  "+ _id)
-	// };
-    
+     const deleteMap = async (_id) => {
+        console.log(_id);
+		DeleteMap({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_MAPS }] });
+		console.log("Map deleted:  "+ _id)
+	};
+    const addRegion = async () => {
+		let map = props.activeMap;
+		const regions = map.regions;
+		const newRegion = {
+			_id: '',
+            name: 'No Name',
+			capital: 'No Description',
+            owner: map._id,
+			leader: 'No Date'
 
+		};
+		let opcode = 1;
+		let regionID = newRegion._id;
+		let mapID = map._id;
+		let transaction = new UpdateMapRegion_Transaction(mapID, regionID, newRegion, opcode, AddRegion, DeleteRegion);
+		props.tps.addTransaction(transaction);
+		tpsRedo();
+	};
 
-    const handleMapClick = (mapId) => {
-        props.setActiveMap(mapId);
-        history.push("/region");
-        
-    }
      //-------------------Modals Setup-------------------
 
      const setShowLogin = () => {
@@ -164,13 +173,12 @@ const Homescreen = (props) => {
 		toggleShowEdit(!showEdit)
 	};
     const setShowDelete = (_id) => {
-        setDeleteMap(_id); 
+        props.setActiveMap(_id); 
 		toggleShowCreate(false);
 		toggleShowLogin(false);
 		toggleShowDelete(!showDelete)
 	};
 
-    
     return (
         
         <WLayout wLayout="header">
@@ -186,7 +194,7 @@ const Homescreen = (props) => {
                             fetchUser={props.fetchUser}     auth={auth} 
 							setShowCreate={setShowCreate} 	setShowLogin={setShowLogin}
                             setShowEdit={setShowEdit}       
-							reloadMaps={refetch} 			//setActiveList={loadTodoList}
+							// reloadTodos={refetch} 			//setActiveList={loadTodoList}
                             setUserName={setUserName}       userName={props.userName}   
                         />
                     </ul>
@@ -194,12 +202,16 @@ const Homescreen = (props) => {
             </WLHeader>
             <WLMain>
                 {  
-                    <MainContents
+                    <>
+                    <WButton onClick={addRegion} wType="texted"  clickAnimation={props.disabled ? "" : "ripple-light" }>
+                    <i className="material-icons" id="add-region-button">add_box</i>
+                    </WButton>
+                    <RegionMainContents
                         auth={auth} user={props.user} updateMapField={updateMapField}
-                        mapList={mapLists} createNewMap={createNewMap} setShowDelete={setShowDelete}
-                        handleMapClick={handleMapClick}
+                        activeMap={props.activeMap} createNewMap={createNewMap} setShowDelete={setShowDelete}
+                        displayMap={displayMap} 
                     />
-                    
+                    </>
                     //Setup main contents here
                 }
               
@@ -213,15 +225,16 @@ const Homescreen = (props) => {
 			}
 
 			{
-				showLogin && (<Login setUserName={setUserName} reloadMaps={refetch}  fetchUser={props.fetchUser} setShowLogin={setShowLogin} />)
+                //TODO: replace reloadTodos={refetch} here 
+				showLogin && (<Login setUserName={setUserName}   fetchUser={props.fetchUser} setShowLogin={setShowLogin} />)
 			}
             
             {
-                showDelete && (<Delete deleteMap ={deleteMap} setShowDelete={setShowDelete} />)
+                showDelete && (<Delete deleteMap ={deleteMap} setShowDelete={setShowDelete} activeMap={props.activeMap}/>)
             }
 
         </WLayout>
 
     );
 };
-export default Homescreen; 
+export default RegionHomescreen; 
