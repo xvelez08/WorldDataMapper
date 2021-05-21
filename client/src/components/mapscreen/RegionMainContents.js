@@ -23,7 +23,7 @@ const RegionMainContents = (props) => {
             <RegionTableContents
                 key={props.user._id}      user={props.user} setShowDelete={props.setShowDelete}
                 deleteItem={props.deleteItem}  editItem={props.editItem}    regions={props.regions}
-                activeMap={props.activeMap} updateMapField={props.updateMapField}
+                activeMap={props.activeMap} editRegion={props.editRegion} 
             />
                 </div>
             

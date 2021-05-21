@@ -90,7 +90,7 @@ export class EditRegion_Transaction extends jsTPS_Transaction {
 
 	async doTransaction() {
 		const { data } = await this.updateFunction({ 
-				variables:{  itemId: this.itemID, _id: this.listID, 
+				variables:{  regionId: this.itemID, _id: this.listID, 
 							 field: this.field, value: this.update, 
 							 flag: this.flag 
 						  }
@@ -101,7 +101,7 @@ export class EditRegion_Transaction extends jsTPS_Transaction {
     async undoTransaction() {
         console.log('undo: ', this.prev, this.update)
 		const { data } = await this.updateFunction({ 
-				variables:{ itemId: this.itemID, _id: this.listID, 
+				variables:{ regionId: this.itemID, _id: this.listID, 
 							field: this.field, value: this.prev, 
 							flag: this.flag 
 						  }

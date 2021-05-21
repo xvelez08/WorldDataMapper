@@ -18,7 +18,7 @@ const RegionTableContents = (props) => {
                     <RegionTableEntry
                         data={entry} key={entry._id} index={index} entryCount={entryCount}
                         deleteItem={props.deleteItem} reorderItem={props.reorderItem}
-                        editItem={props.editItem}
+                        editRegion={props.editRegion} 
                     />
                 ))
             }

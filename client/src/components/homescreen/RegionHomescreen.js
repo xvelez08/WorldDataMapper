@@ -76,11 +76,11 @@ const RegionHomescreen = (props) => {
 
 	// const [ReorderMapItems] 		    = useMutation(mutations.REORDER_ITEMS, mutationOptions);
 	// const [sortMapItems] 		    = useMutation(mutations.SORT_ITEMS, mutationOptions);
-	const [UpdateMapItemField] 	    = useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
+	const [UpdateRegionField] 	        = useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
 	const [UpdateMapField] 	            = useMutation(mutations.UPDATE_MAP_FIELD, mutationOptions);
-	const [AddRegion] 			    = useMutation(mutations.ADD_REGION, mutationOptions);
-	const [DeleteRegion] 			= useMutation(mutations.DELETE_REGION, mutationOptions);
-	const    [AddMap] 			        = useMutation(mutations.ADD_MAP);
+	const [AddRegion] 			        = useMutation(mutations.ADD_REGION, mutationOptions);
+	const [DeleteRegion] 			    = useMutation(mutations.DELETE_REGION, mutationOptions);
+	const [AddMap] 			            = useMutation(mutations.ADD_MAP);
 	const [DeleteMap] 			        = useMutation(mutations.DELETE_MAP);
     
     const tpsUndo = async () => {
@@ -111,7 +111,16 @@ const RegionHomescreen = (props) => {
             console.log("data wass here")
 		}
 	}
+    const editRegion = async (regionID, field, value, prev) => {
+		let flag = 0;
+		if (field === 'completed') flag = 1;
+		let mapID = props.activeMap;
+        console.log(mapID)
+		let transaction = new EditRegion_Transaction(mapID, regionID, field, prev, value, flag, UpdateRegionField);
+		props.tps.addTransaction(transaction);
+		tpsRedo();
 
+	};
 
 
      const createNewMap = async () => {
@@ -136,7 +145,8 @@ const RegionHomescreen = (props) => {
      }
 
      const updateMapField = async (_id, field, value, prev) => {
-         let transaction = new UpdateMapField_Transaction(_id, field, prev, value, UpdateMapField);
+         let mapID = props.activeMap;
+         let transaction = new EditRegion_Transaction(_id, field, prev, value, UpdateMapField);
          props.tps.addTransaction(transaction);
          tpsRedo();
      }
@@ -221,7 +231,7 @@ const RegionHomescreen = (props) => {
                     <RegionMainContents
                         auth={auth} user={props.user} updateMapField={updateMapField}
                         activeMap={props.activeMap} createNewMap={createNewMap} setShowDelete={setShowDelete}
-                        mapName={mapName}  regions={regionList}
+                        mapName={mapName}  regions={regionList} editRegion={editRegion}
                     />
                    </div>
                     //Setup main contents here

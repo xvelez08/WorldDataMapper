@@ -27,6 +27,7 @@ const RegionTableEntry = (props) => {
         const newCapital = e.target.value ? e.target.value : 'No Capital';
         const prevCapital = capital;
         if(newCapital !== prevCapital) {
+            console.log(data._id);
             props.editRegion(data._id, 'capital', newCapital, prevCapital);
         }
 
@@ -84,7 +85,7 @@ const RegionTableEntry = (props) => {
 
             <WCol size="2">
                 {
-                    editingCapital ? <WInput
+                    editingCapital || capital === '' ? <WInput
                         className='table-input' onBlur={handleCapitalEdit}
                         autoFocus={true} defaultValue={capital} type='text'
                          inputclass="table-input-class"
