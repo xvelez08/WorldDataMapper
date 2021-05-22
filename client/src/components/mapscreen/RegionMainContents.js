@@ -16,7 +16,7 @@ const RegionMainContents = (props) => {
             <div className = "region-table">
             <RegionTableHeader
                 disabled={!props.user._id}        addMap={props.addMap}
-                setShowDelete={props.setShowDelete}
+                setShowDelete={props.setShowDelete} sort={props.sort}
                 createNewMap={props.createNewMap}     
             />
            

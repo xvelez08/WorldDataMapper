@@ -50,6 +50,8 @@ export const DELETE_REGION = gql`
 			capital
 			owner
 			leader
+			flag
+			landmarks
 		}
 	}
 `;
@@ -62,6 +64,8 @@ export const UPDATE_REGION_FIELD = gql`
 			capital
 			owner
 			leader
+			flag
+			landmarks
 		}
 	}
 `;
@@ -74,6 +78,8 @@ export const REORDER_REGIONS = gql`
 			capital
 			owner
 			leader
+			flag
+			landmarks
 		}
 	}
 `;
@@ -86,6 +92,8 @@ export const SORT_REGIONS = gql`
 			capital
 			owner
 			leader
+			flag
+			landmarks
 		}
 	}
 `;
@@ -102,6 +110,8 @@ export const ADD_MAP = gql`
 				capital
 				owner
 				leader
+				flag
+				landmarks
 			}
 			sortRule
 			sortDirection

@@ -21,6 +21,8 @@ export const GET_DB_MAPS = gql`
 				capital
 				owner
 				leader
+				flag
+				landmarks
 			}
 			sortRule
 			sortDirection

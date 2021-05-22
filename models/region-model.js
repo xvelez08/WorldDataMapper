@@ -21,7 +21,12 @@ const regionSchema = new Schema(
 		leader: {
 			type: String,
 			required: true
-		}
+		}, 
+		flag:{
+			type: String,
+			required: true
+		}, 
+		landmarks:[String]
 	}
 );
 

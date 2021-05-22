@@ -10,6 +10,8 @@ const RegionTableEntry = (props) => {
     const name = data.name;
     const capital = data.capital; 
     const leader = data.leader;
+    const flag = data.flag;
+    const landmarks = data.landmarks; 
 
    
 
@@ -19,7 +21,7 @@ const RegionTableEntry = (props) => {
     const [editingName, toggleNameEdit] = useState(false);
     const [editingCapital, toggleCapitalEdit] = useState(false);
     const [editingLeader, toggleLeaderEdit] = useState(false);
-
+    const [editingFlag, toggleFlagEdit] = useState(false);
     const disabledButton = () => {}
 
     const handleCapitalEdit = (e) => {
@@ -43,6 +45,22 @@ const RegionTableEntry = (props) => {
     };
 
     const handleLeaderEdit = (e) => {
+        toggleLeaderEdit(false);
+        const newLeader = e.target.value ? e.target.value : 'No Leader';
+        const prevLeader = leader;
+        if(newLeader !== prevLeader) {
+            props.editRegion(data._id, 'leader', newLeader, prevLeader);
+        }
+    };
+    const handleFlagEdit = (e) => {
+        toggleFlagEdit(false);
+        const newFlag = e.target.value ? e.target.value : 'No Flag';
+        const prevFlag = flag;
+        if(newFlag !== prevFlag) {
+            props.editRegion(data._id, 'flag', newFlag, prevFlag);
+        }
+    };
+    const handleLandmarkClick = (e) => {
         toggleLeaderEdit(false);
         const newLeader = e.target.value ? e.target.value : 'No Leader';
         const prevLeader = leader;
@@ -116,23 +134,23 @@ const RegionTableEntry = (props) => {
             <WCol size="2">
                 
                     {
-                        editingLeader || leader === ''
+                        editingFlag || flag === ''
                         ? <WInput
-                            className='table-input' onBlur={handleLeaderEdit}
-                            onKeyDown={(e) => {if(e.keyCode === 13) handleLeaderEdit(e)}}
-                            autoFocus={true} defaultValue={leader} type='text'
+                            className='table-input' onBlur={handleFlagEdit}
+                            onKeyDown={(e) => {if(e.keyCode === 13) handleFlagEdit(e)}}
+                            autoFocus={true} defaultValue={flag} type='text'
                             inputClass="table-input-class"
                         />
                         : <div className="table-text"
-                            onClick={() => toggleLeaderEdit(!editingLeader)}
-                        >{leader}
+                            onClick={() => toggleFlagEdit(!editingFlag)}
+                        >{flag}
                         </div>
                      }
                 
             </WCol>
             <WCol size="2">
                 {
-                   editingLeader || leader === ''
+                   false || leader === ''
                    ? <WInput
                        className='table-input' onBlur={handleLeaderEdit}
                        onKeyDown={(e) => {if(e.keyCode === 13) handleLeaderEdit(e)}}

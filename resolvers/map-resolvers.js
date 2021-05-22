@@ -269,7 +269,7 @@ module.exports = {
 		addMap: async (_, args) => {
 			const { map } = args;
 			const objectId = new ObjectId();
-			const { id, name, owner, regions , sortRule, sortDirection} = map;
+			const { id, name, owner, regions, sortRule, sortDirection} = map;
 			const newList = new Map({
 				_id: objectId,
 				name: name,

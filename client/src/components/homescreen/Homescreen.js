@@ -46,7 +46,7 @@ const Homescreen = (props) => {
 	const [showCreate, toggleShowCreate] 	= useState(false);
     const [showDelete, toggleShowDelete] 	= useState(false);
     const [userFullName, setUserName]       = useState(userName);   
-    const [deleteMap, setDeleteMap]         = useState(null);
+    const [deletedMap, setDeleteMap]         = useState(null);
     const [displayMap, setDisplayMap]       = useState(null); 
     const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
 	const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
@@ -131,11 +131,11 @@ const Homescreen = (props) => {
          props.tps.addTransaction(transaction);
          tpsRedo();
      }
-    //  const deleteMap = async (_id) => {
-    //     console.log(_id);
-	// 	DeleteMap({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_MAPS }] });
-	// 	console.log("Map deleted:  "+ _id)
-	// };
+     const deleteMap = async (_id) => {
+        console.log(_id);
+		DeleteMap({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_MAPS }] });
+		console.log("Map deleted:  "+ _id)
+	};
     
 
 
@@ -217,7 +217,7 @@ const Homescreen = (props) => {
 			}
             
             {
-                showDelete && (<Delete deleteMap ={deleteMap} setShowDelete={setShowDelete} />)
+                showDelete && (<Delete deletedMap={deletedMap} deleteMap={deleteMap} setShowDelete={setShowDelete} />)
             }
 
         </WLayout>

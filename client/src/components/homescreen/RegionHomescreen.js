@@ -41,6 +41,7 @@ const RegionHomescreen = (props) => {
     let mapLists = []; 
     let regionList = []; 
     let mapName = "";
+    const [sortRule, setSortRule] = useState('unsorted');
     const [showEdit, toggleShowEdit] 	    = useState(false);
 	const [showLogin, toggleShowLogin] 		= useState(false);
 	const [showCreate, toggleShowCreate] 	= useState(false);
@@ -75,7 +76,7 @@ const RegionHomescreen = (props) => {
 	}
 
 	// const [ReorderMapItems] 		    = useMutation(mutations.REORDER_ITEMS, mutationOptions);
-	// const [sortMapItems] 		    = useMutation(mutations.SORT_ITEMS, mutationOptions);
+	const [sortMapItems] 		    = useMutation(mutations.SORT_REGIONS, mutationOptions);
 	const [UpdateRegionField] 	        = useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
 	const [UpdateMapField] 	            = useMutation(mutations.UPDATE_MAP_FIELD, mutationOptions);
 	const [AddRegion] 			        = useMutation(mutations.ADD_REGION, mutationOptions);
@@ -150,11 +151,11 @@ const RegionHomescreen = (props) => {
          props.tps.addTransaction(transaction);
          tpsRedo();
      }
-     const deleteMap = async (_id) => {
-        console.log(_id);
-		DeleteMap({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_MAPS }] });
-		console.log("Map deleted:  "+ _id)
-	};
+    //  const deleteMap = async (_id) => {
+    //     console.log(_id);
+	// 	DeleteMap({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_MAPS }] });
+	// 	console.log("Map deleted:  "+ _id)
+	// };
     const addRegion = async () => {
 		let map = props.activeMap;
 		const newRegion = {
@@ -162,8 +163,9 @@ const RegionHomescreen = (props) => {
             name: 'No Name',
 			capital: 'No Description',
             owner: '',
-			leader: 'No Date'
-
+			leader: 'No Date',
+            flag: 'No Flag', 
+            landmarks: []
 		};
 		let opcode = 1;
 		let regionID = newRegion._id;
@@ -172,6 +174,15 @@ const RegionHomescreen = (props) => {
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	};
+    const sort = (criteria) => {
+		let prevSortRule = sortRule;
+		setSortRule(criteria);
+		let transaction = new SortItems_Transaction(props.activeMap, criteria, prevSortRule, sortMapItems);
+		console.log(transaction)
+		props.tps.addTransaction(transaction);
+		tpsRedo();
+		
+	}
 
      //-------------------Modals Setup-------------------
 
@@ -229,9 +240,10 @@ const RegionHomescreen = (props) => {
                     </WButton>
                     <h1>Map: {mapName}</h1>
                     <RegionMainContents
-                        auth={auth} user={props.user} updateMapField={updateMapField}
+                        auth={auth} user={props.user} updateMapField={updateMapField} sort={sort}
                         activeMap={props.activeMap} createNewMap={createNewMap} setShowDelete={setShowDelete}
-                        mapName={mapName}  regions={regionList} editRegion={editRegion}
+                        mapName={mapName}  regions={regionList} editRegion={editRegion} 
+                        canUndo={canUndo} 	canRedo={canRedo} undo={tpsUndo} redo={tpsRedo}
                     />
                    </div>
                     //Setup main contents here
@@ -252,7 +264,7 @@ const RegionHomescreen = (props) => {
 			}
             
             {
-                showDelete && (<Delete deleteMap ={deleteMap} setShowDelete={setShowDelete} activeMap={props.activeMap}/>)
+                showDelete && (<Delete  setShowDelete={setShowDelete} activeMap={props.activeMap}/>)
             }
 
         </WLayout>
