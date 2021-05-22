@@ -12,7 +12,7 @@ const RegionMainContents = (props) => {
     {
         props.auth ?
             
-            
+            <>
             <div className = "region-table">
             <RegionTableHeader
                 disabled={!props.user._id}        addMap={props.addMap}
@@ -22,10 +22,11 @@ const RegionMainContents = (props) => {
            
             <RegionTableContents
                 key={props.user._id}      user={props.user} setShowDelete={props.setShowDelete}
-                deleteItem={props.deleteItem}  editItem={props.editItem}    regions={props.regions}
+                deleteRegion={props.deleteRegion}  editItem={props.editItem}    regions={props.regions}
                 activeMap={props.activeMap} editRegion={props.editRegion} 
             />
                 </div>
+                </>
             
 				:
         

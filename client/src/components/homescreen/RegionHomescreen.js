@@ -112,6 +112,7 @@ const RegionHomescreen = (props) => {
             console.log("data wass here")
 		}
 	}
+    const clickDisabled = () => {};
     const editRegion = async (regionID, field, value, prev) => {
 		let flag = 0;
 		if (field === 'completed') flag = 1;
@@ -122,8 +123,23 @@ const RegionHomescreen = (props) => {
 		tpsRedo();
 
 	};
+    const undoOptions = {
+        className:  !props.tps.hasTransactionToUndo() ? ' table-header-button-disabled ' : 'table-header-button',
+        onClick:  !props.tps.hasTransactionToUndo()  ? clickDisabled : tpsUndo,
+        wType: "texted", 
+        clickAnimation:  !props.tps.hasTransactionToUndo() ? "" : "ripple-light",  
+        shape: "rounded",
+        id:"undo-btn"
+    }
 
-
+    const redoOptions = {
+        className: props.disabled || !props.tps.hasTransactionToRedo() ? ' table-header-button-disabled ' : 'table-header-button ',
+        onClick: props.disabled || !props.tps.hasTransactionToRedo()   ? clickDisabled : tpsRedo, 
+        wType: "texted", 
+        clickAnimation: props.disabled || !props.tps.hasTransactionToRedo() ? "" : "ripple-light" ,
+        shape: "rounded",
+        id:"redo-btn"
+    }
      const createNewMap = async () => {
          let newmap = {
              _id: '',
@@ -151,11 +167,7 @@ const RegionHomescreen = (props) => {
          props.tps.addTransaction(transaction);
          tpsRedo();
      }
-    //  const deleteMap = async (_id) => {
-    //     console.log(_id);
-	// 	DeleteMap({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_MAPS }] });
-	// 	console.log("Map deleted:  "+ _id)
-	// };
+  
     const addRegion = async () => {
 		let map = props.activeMap;
 		const newRegion = {
@@ -174,6 +186,25 @@ const RegionHomescreen = (props) => {
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	};
+
+    const deleteRegion = async (region, index) => {
+		let mapID = props.activeMap;
+		let regionID = region._id;
+		let opcode = 0;
+		let regionToDelete = {
+			_id: region._id,
+			description: region.name,
+			capital: region.capital,
+			leader: region.leader,
+			flag: region.flag, 
+            landmarks:region.landmarks
+		}
+		let transaction = new UpdateMapRegion_Transaction(mapID, regionID, regionToDelete, opcode, AddRegion, DeleteRegion, index);
+		props.tps.addTransaction(transaction);
+		tpsRedo();
+
+	};
+
     const sort = (criteria) => {
 		let prevSortRule = sortRule;
 		setSortRule(criteria);
@@ -209,7 +240,7 @@ const RegionHomescreen = (props) => {
 		toggleShowLogin(false);
 		toggleShowDelete(!showDelete)
 	};
-
+    
     return (
         
         <WLayout wLayout="header">
@@ -233,20 +264,28 @@ const RegionHomescreen = (props) => {
             </WLHeader>
             <WLMain>
                 {  
-                   
+                    <>
                     <div className="add-region-button-header">
                     <WButton id="add-region-btn" onClick={addRegion} wType="texted"  clickAnimation={"ripple-light" }>
                     <i className="material-icons" id="add-region-icon">add_box</i>
                     </WButton>
+                    <WButton {...undoOptions}>
+                            <i className="material-icons">undo</i>
+                    </WButton>
+                    <WButton  {...redoOptions}>
+                            <i className="material-icons">redo</i>
+                    </WButton>
                     <h1>Map: {mapName}</h1>
+                    </div>
                     <RegionMainContents
                         auth={auth} user={props.user} updateMapField={updateMapField} sort={sort}
                         activeMap={props.activeMap} createNewMap={createNewMap} setShowDelete={setShowDelete}
-                        mapName={mapName}  regions={regionList} editRegion={editRegion} 
+                        mapName={mapName}  regions={regionList} editRegion={editRegion} deleteRegion={deleteRegion}
                         canUndo={canUndo} 	canRedo={canRedo} undo={tpsUndo} redo={tpsRedo}
                     />
-                   </div>
-                    //Setup main contents here
+                   
+                   </>
+                    
                 }
               
             </WLMain>

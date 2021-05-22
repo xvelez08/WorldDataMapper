@@ -17,7 +17,7 @@ const RegionTableContents = (props) => {
                 entries.map((entry, index) => (
                     <RegionTableEntry
                         data={entry} key={entry._id} index={index} entryCount={entryCount}
-                        deleteItem={props.deleteItem} reorderItem={props.reorderItem}
+                        deleteRegion={props.deleteRegion} reorderItem={props.reorderItem}
                         editRegion={props.editRegion} 
                     />
                 ))
